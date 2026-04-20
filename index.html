@@ -1,6 +1,186 @@
-<p> New repo</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumina — A Beautiful Website</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
 
-<p>This is a new change being made to test how branch works (dropdown)</p>
+  <!-- ── NAVIGATION ── -->
+  <nav class="navbar">
+    <div class="nav-logo">Lumina</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Est. 2024</span>
+      <h1 class="hero-title">
+        Where <em>design</em><br>meets intention.
+      </h1>
+      <p class="hero-sub">
+        We craft experiences that breathe — thoughtful, refined,<br>
+        and built to last well beyond the moment.
+      </p>
+      <a href="#about" class="btn-primary">Explore our work</a>
+    </div>
+    <div class="hero-ornament" aria-hidden="true">
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+    </div>
+  </header>
 
-g
+  <main>
+
+    <!-- ── ABOUT ── -->
+    <section id="about" class="section about">
+      <div class="section-label">01 — About</div>
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="img-block"></div>
+        </div>
+        <div class="about-text">
+          <h2>Crafted with quiet confidence.</h2>
+          <p>
+            Lumina was founded on a single belief: that the most powerful design
+            is invisible. It does not shout for attention — it <strong>earns</strong> it,
+            slowly, through texture, rhythm, and restraint.
+          </p>
+          <p>
+            Our studio works with founders, institutions, and visionaries who
+            understand that great work takes time, and that time is always worth spending.
+          </p>
+          <br>
+          <p>
+            <em>"We do not follow trends. We follow principles."</em>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services" class="section services">
+      <div class="section-label">02 — Services</div>
+      <h2 class="section-title">What we do best.</h2>
+      <p class="section-intro">
+        From the first sketch to the final pixel, we guide every step of the
+        creative process with precision and care.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <span class="card-num">I</span>
+          <h3>Brand Identity</h3>
+          <p>
+            Logos, colour systems, and visual languages built to hold their
+            shape across every surface — print, screen, and beyond.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-num">II</span>
+          <h3>Web Design</h3>
+          <p>
+            Responsive, accessible, and unmistakably human websites that
+            convert visitors into loyal advocates.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-num">III</span>
+          <h3>Art Direction</h3>
+          <p>
+            Creative leadership for campaigns, editorials, and brand moments
+            that demand a singular point of view.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-num">IV</span>
+          <h3>Typography</h3>
+          <p>
+            Custom type pairings and typographic systems designed to give your
+            words the weight they deserve.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── JOURNAL ── -->
+    <section id="journal" class="section journal">
+      <div class="section-label">03 — Journal</div>
+      <h2 class="section-title">Thoughts & observations.</h2>
+
+      <div class="posts">
+        <article class="post">
+          <span class="post-date">April 2025</span>
+          <h3>On the virtue of blank space</h3>
+          <p>
+            Negative space is not absence. It is the breathing room that lets
+            every other element speak clearly.
+          </p>
+          <br>
+          <a href="#" class="post-link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <span class="post-date">February 2025</span>
+          <h3>Why restraint is a superpower</h3>
+          <p>
+            Adding another element is easy. Knowing what to remove — and having
+            the discipline to do so — is the real creative skill.
+          </p>
+          <br>
+          <a href="#" class="post-link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <span class="post-date">January 2025</span>
+          <h3>The typography rules we live by</h3>
+          <p>
+            Type is the voice of a brand. Treat it with the same care you would
+            give to any great speaker's words.
+          </p>
+          <br>
+          <a href="#" class="post-link">Read more →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="section contact">
+      <div class="section-label">04 — Contact</div>
+      <div class="contact-inner">
+        <h2>Let's make something <em>remarkable</em>.</h2>
+        <p>
+          We take on a limited number of projects each year to ensure every
+          client receives our full attention. If you have something in mind,
+          reach out — we'd love to hear it.
+        </p>
+        <br>
+        <p class="contact-email">
+          <a href="mailto:hello@lumina.studio">hello@lumina.studio</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <p>&copy; 2024 Lumina Studio. All rights reserved.</p>
+    <p>Designed with intention.</p>
+  </footer>
+
+</body>
+</html>
+
