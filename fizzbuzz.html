@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FizzBuzz — Jainam Suthar</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── FIZZBUZZ PAGE SPECIFIC ── */
+    .fb-hero {
+      padding: 6rem 6vw 4rem;
+      border-bottom: 1px solid var(--clr-border);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .fb-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: var(--fz-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--clr-ink-mute);
+      margin-bottom: 3rem;
+      transition: color var(--transition);
+    }
+
+    .fb-back:hover { color: var(--clr-accent); }
+
+    .fb-hero .section-label { margin-bottom: 1rem; }
+
+    .fb-hero h1 {
+      font-family: var(--ff-serif);
+      font-size: clamp(var(--fz-2xl), 5vw, var(--fz-4xl));
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .fb-hero h1 em {
+      font-style: italic;
+      color: var(--clr-accent);
+    }
+
+    .fb-hero p {
+      font-size: var(--fz-lg);
+      color: var(--clr-ink-mute);
+      font-weight: 300;
+      max-width: 540px;
+    }
+
+    /* ── CODE BLOCK ── */
+    .fb-code-section {
+      padding: 5rem 6vw;
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .fb-code-section .section-label { margin-bottom: 2rem; }
+
+    .code-window {
+      background: var(--clr-ink);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 720px;
+      box-shadow: 0 24px 60px rgba(28,26,23,0.18);
+    }
+
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red   { background: #FF5F56; }
+    .dot-yellow{ background: #FFBD2E; }
+    .dot-green { background: #27C93F; }
+
+    .code-filename {
+      margin-left: auto;
+      font-size: var(--fz-xs);
+      color: rgba(249,246,240,0.35);
+      letter-spacing: 0.1em;
+      font-family: var(--ff-sans);
+    }
+
+    pre {
+      margin: 0;
+      padding: 2rem 1.75rem;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: rgba(249,246,240,0.85);
+    }
+
+    /* Syntax colouring */
+    .kw  { color: #D4A85A; }   /* keywords */
+    .fn  { color: #87C3FF; }   /* function names */
+    .str { color: #98D9A4; }   /* strings */
+    .num { color: #F9A87A; }   /* numbers */
+    .cm  { color: rgba(249,246,240,0.35); font-style: italic; }
+
+    /* ── OUTPUT GRID ── */
+    .fb-output-section {
+      padding: 5rem 6vw;
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .fb-output-section .section-label { margin-bottom: 0.75rem; }
+
+    .fb-output-section h2 {
+      font-family: var(--ff-serif);
+      font-size: clamp(var(--fz-xl), 3vw, var(--fz-2xl));
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    .fb-output-section > p {
+      color: var(--clr-ink-mute);
+      font-size: var(--fz-sm);
+      margin-bottom: 3rem;
+    }
+
+    .fb-controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .fb-btn {
+      display: inline-block;
+      padding: 0.65rem 1.75rem;
+      font-size: var(--fz-xs);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: 1px solid var(--clr-ink);
+      background: var(--clr-ink);
+      color: var(--clr-bg);
+      transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .fb-btn:hover {
+      background: var(--clr-accent);
+      border-color: var(--clr-accent);
+      transform: translateY(-2px);
+    }
+
+    .fb-btn.outline {
+      background: transparent;
+      color: var(--clr-ink);
+    }
+
+    .fb-btn.outline:hover {
+      background: var(--clr-ink);
+      color: var(--clr-bg);
+    }
+
+    .fb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+      gap: 6px;
+    }
+
+    .fb-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      background: var(--clr-surface);
+      color: var(--clr-ink);
+      border: 1px solid var(--clr-border);
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .fb-cell.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .fb-cell.fizz {
+      background: var(--clr-surface);
+      border-color: var(--clr-accent);
+      color: var(--clr-accent);
+      font-family: var(--ff-serif);
+      font-style: italic;
+    }
+
+    .fb-cell.buzz {
+      background: var(--clr-ink);
+      border-color: var(--clr-ink);
+      color: var(--clr-bg);
+      font-family: var(--ff-serif);
+      font-style: italic;
+    }
+
+    .fb-cell.fizzbuzz {
+      background: var(--clr-accent);
+      border-color: var(--clr-accent);
+      color: var(--clr-white);
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-size: 0.72rem;
+    }
+
+    /* Legend */
+    .fb-legend {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: var(--fz-xs);
+      letter-spacing: 0.08em;
+      color: var(--clr-ink-mute);
+    }
+
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1px solid var(--clr-border);
+      flex-shrink: 0;
+    }
+
+    .swatch-num      { background: var(--clr-surface); }
+    .swatch-fizz     { background: var(--clr-surface); border-color: var(--clr-accent); }
+    .swatch-buzz     { background: var(--clr-ink); }
+    .swatch-fizzbuzz { background: var(--clr-accent); border-color: var(--clr-accent); }
+
+    /* ── FOOTER ── */
+    .footer { margin-top: 0; }
+
+    @media (max-width: 768px) {
+      .fb-grid { grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="navbar">
+    <div class="nav-logo">My Portfolio</div>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Projects</a></li>
+      <li><a href="index.html#journal">Journal</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="fb-hero">
+    <a href="index.html#services" class="fb-back">← Back to Projects</a>
+    <div class="section-label">02 — Projects / Brand Identity</div>
+    <h1>The <em>FizzBuzz</em> Challenge</h1>
+    <p>A classic programming exercise — counting to 100, replacing multiples of 3 with "Fizz", multiples of 5 with "Buzz", and both with "FizzBuzz".</p>
+  </div>
+
+  <main>
+
+    <!-- ── CODE ── -->
+    <section class="fb-code-section">
+      <div class="section-label">Source Code</div>
+      <div class="code-window">
+        <div class="code-topbar">
+          <span class="code-dot dot-red"></span>
+          <span class="code-dot dot-yellow"></span>
+          <span class="code-dot dot-green"></span>
+          <span class="code-filename">FizzBuzz.js</span>
+        </div>
+        <pre><span class="kw">var</span> output = [];
+<span class="kw">var</span> count = <span class="num">1</span>;
+
+<span class="kw">function</span> <span class="fn">fizzBuzz</span>() {
+
+  <span class="kw">while</span> (count <= <span class="num">100</span>) {
+
+    <span class="kw">if</span> (count % <span class="num">3</span> === <span class="num">0</span> && count % <span class="num">5</span> === <span class="num">0</span>) {
+      output.<span class="fn">push</span>(<span class="str">"FizzBuzz"</span>);
+
+    } <span class="kw">else if</span> (count % <span class="num">3</span> === <span class="num">0</span>) {
+      output.<span class="fn">push</span>(<span class="str">"Fizz"</span>);
+
+    } <span class="kw">else if</span> (count % <span class="num">5</span> === <span class="num">0</span>) {
+      output.<span class="fn">push</span>(<span class="str">"Buzz"</span>);
+
+    } <span class="kw">else</span> {
+      output.<span class="fn">push</span>(count);
+    }
+
+    count = count + <span class="num">1</span>;
+  }
+
+  console.<span class="fn">log</span>(output);
+}
+
+<span class="fn">fizzBuzz</span>();</pre>
+      </div>
+    </section>
+
+    <!-- ── INTERACTIVE OUTPUT ── -->
+    <section class="fb-output-section">
+      <div class="section-label">Live Output</div>
+      <h2>Interactive result — 1 to 100</h2>
+      <p>Each cell represents one iteration. Click "Run" to animate the output.</p>
+
+      <div class="fb-controls">
+        <button class="fb-btn" id="runBtn" onclick="runFizzBuzz()">Run FizzBuzz</button>
+        <button class="fb-btn outline" onclick="resetFizzBuzz()">Reset</button>
+      </div>
+
+      <div class="fb-grid" id="fbGrid"></div>
+
+      <div class="fb-legend">
+        <div class="legend-item">
+          <div class="legend-swatch swatch-num"></div>
+          Number
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch swatch-fizz"></div>
+          Fizz (÷3)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch swatch-buzz"></div>
+          Buzz (÷5)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch swatch-fizzbuzz"></div>
+          FizzBuzz (÷3 &amp; ÷5)
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; Jainam Suthar. All rights reserved.</p>
+    <p>Designed with intention.</p>
+  </footer>
+
+  <script>
+    // Build the grid on load (cells hidden)
+    const grid = document.getElementById('fbGrid');
+
+    function buildGrid() {
+      grid.innerHTML = '';
+      for (let i = 1; i <= 100; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'fb-cell';
+        cell.id = 'cell-' + i;
+
+        let label, type;
+        if (i % 15 === 0)     { label = 'FizzBuzz'; type = 'fizzbuzz'; }
+        else if (i % 3 === 0) { label = 'Fizz';     type = 'fizz'; }
+        else if (i % 5 === 0) { label = 'Buzz';     type = 'buzz'; }
+        else                   { label = i;          type = 'num'; }
+
+        cell.textContent = label;
+        cell.dataset.type = type;
+        grid.appendChild(cell);
+      }
+    }
+
+    function runFizzBuzz() {
+      document.getElementById('runBtn').disabled = true;
+      const cells = grid.querySelectorAll('.fb-cell');
+      cells.forEach((cell, idx) => {
+        setTimeout(() => {
+          cell.classList.add(cell.dataset.type, 'visible');
+        }, idx * 28);
+      });
+    }
+
+    function resetFizzBuzz() {
+      buildGrid();
+      document.getElementById('runBtn').disabled = false;
+    }
+
+    buildGrid();
+  </script>
+
+</body>
+</html>

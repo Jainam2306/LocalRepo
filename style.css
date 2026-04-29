@@ -322,6 +322,26 @@ img { display: block; max-width: 100%; }
   line-height: 1.7;
 }
 
+.btn-card {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.55rem 1.4rem;
+  font-size: var(--fz-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  border: 1px solid var(--clr-accent);
+  border-radius: var(--radius);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+
+.btn-card:hover {
+  background: var(--clr-accent);
+  color: var(--clr-white);
+  transform: translateY(-2px);
+}
+
 /* ── JOURNAL ── */
 .posts {
   display: grid;
