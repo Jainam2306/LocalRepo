@@ -1,30 +1,294 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Dicee</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Refresh Me</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dice Challenge — Jainam Suthar</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── DICE PAGE SPECIFIC ── */
+    .dice-hero {
+      padding: 6rem 6vw 4rem;
+      border-bottom: 1px solid var(--clr-border);
+      animation: fadeUp 0.8s ease both;
+    }
 
-      <div class="dice">
-        <p>Player 1</p>
-        <img class="img1" src="images/dice6.png" />
+    .dice-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: var(--fz-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--clr-ink-mute);
+      margin-bottom: 3rem;
+      transition: color var(--transition);
+    }
+
+    .dice-back:hover { color: var(--clr-accent); }
+
+    .dice-hero .section-label { margin-bottom: 1rem; }
+
+    .dice-hero h1 {
+      font-family: var(--ff-serif);
+      font-size: clamp(var(--fz-2xl), 5vw, var(--fz-4xl));
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .dice-hero h1 em {
+      font-style: italic;
+      color: var(--clr-accent);
+    }
+
+    .dice-hero p {
+      font-size: var(--fz-lg);
+      color: var(--clr-ink-mute);
+      font-weight: 300;
+      max-width: 540px;
+    }
+
+    /* ── GAME SECTION ── */
+    .dice-game-section {
+      padding: 5rem 6vw;
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .dice-game-section .section-label { margin-bottom: 2rem; }
+
+    .dice-result-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(var(--fz-2xl), 5vw, var(--fz-3xl));
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+      color: var(--clr-ink);
+      text-align: center;
+    }
+
+    .dice-result-title em {
+      font-style: italic;
+      color: var(--clr-accent);
+    }
+
+    .dice-arena {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .dice-player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .dice-player-label {
+      font-size: var(--fz-xs);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--clr-ink-mute);
+      font-weight: 500;
+    }
+
+    .dice-img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(28,26,23,0.14);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dice-img:hover {
+      transform: translateY(-4px) rotate(3deg);
+      box-shadow: 0 20px 48px rgba(28,26,23,0.2);
+    }
+
+    .dice-vs {
+      font-family: var(--ff-serif);
+      font-size: var(--fz-3xl);
+      font-weight: 300;
+      color: var(--clr-border);
+      font-style: italic;
+    }
+
+    .dice-refresh-hint {
+      text-align: center;
+      font-size: var(--fz-sm);
+      color: var(--clr-ink-mute);
+      letter-spacing: 0.06em;
+    }
+
+    .dice-refresh-hint a {
+      color: var(--clr-accent);
+      border-bottom: 1px solid var(--clr-accent);
+      padding-bottom: 1px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .dice-refresh-hint a:hover {
+      color: var(--clr-accent-lt);
+      border-color: var(--clr-accent-lt);
+    }
+
+    /* ── CODE SECTION ── */
+    .dice-code-section {
+      padding: 5rem 6vw;
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .dice-code-section .section-label { margin-bottom: 2rem; }
+
+    .code-window {
+      background: var(--clr-ink);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 760px;
+      box-shadow: 0 24px 60px rgba(28,26,23,0.18);
+    }
+
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red    { background: #FF5F56; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green  { background: #27C93F; }
+
+    .code-filename {
+      margin-left: auto;
+      font-size: var(--fz-xs);
+      color: rgba(249,246,240,0.35);
+      letter-spacing: 0.1em;
+    }
+
+    pre {
+      margin: 0;
+      padding: 2rem 1.75rem;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: rgba(249,246,240,0.85);
+    }
+
+    .kw  { color: #D4A85A; }
+    .fn  { color: #87C3FF; }
+    .str { color: #98D9A4; }
+    .num { color: #F9A87A; }
+    .cm  { color: rgba(249,246,240,0.35); font-style: italic; }
+
+    .footer { margin-top: 0; }
+
+    @media (max-width: 768px) {
+      .dice-arena { gap: 3rem; }
+      .dice-img   { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="navbar">
+    <div class="nav-logo">My Portfolio</div>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#services">Projects</a></li>
+      <li><a href="../index.html#journal">Journal</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="dice-hero">
+    <a href="../index.html#services" class="dice-back">← Back to Projects</a>
+    <div class="section-label">02 — Projects / Dice Challenge</div>
+    <h1>The <em>Dice</em> Challenge</h1>
+    <p>A two-player dice game powered by JavaScript randomness. Refresh the page to roll — the higher number wins. Simple, fair, and a little addictive.</p>
+  </div>
+
+  <main>
+
+    <!-- ── GAME ── -->
+    <section class="dice-game-section">
+      <div class="section-label">Live Game</div>
+
+      <h2 class="dice-result-title" id="resultTitle">Rolling the dice…</h2>
+
+      <div class="dice-arena">
+        <div class="dice-player">
+          <span class="dice-player-label">Player 1</span>
+          <img class="dice-img img1" src="images/dice6.png" alt="Player 1 dice" />
+        </div>
+
+        <span class="dice-vs">vs</span>
+
+        <div class="dice-player">
+          <span class="dice-player-label">Player 2</span>
+          <img class="dice-img img2" src="images/dice6.png" alt="Player 2 dice" />
+        </div>
       </div>
 
-      <div class="dice">
-        <p>Player 2</p>
-        <img class="img2" src="images/dice6.png" />
-      </div>
-    </div>
+      <p class="dice-refresh-hint">
+        <a href="javascript:location.reload()">Refresh the page</a> to roll again.
+      </p>
+    </section>
 
-    <footer>Have Fun!</footer>
-    <script src ="index.js"></script>
-  </body>
+    <!-- ── SOURCE CODE ── -->
+    <section class="dice-code-section">
+      <div class="section-label">Source Code</div>
+      <div class="code-window">
+        <div class="code-topbar">
+          <span class="code-dot dot-red"></span>
+          <span class="code-dot dot-yellow"></span>
+          <span class="code-dot dot-green"></span>
+          <span class="code-filename">index.js</span>
+        </div>
+        <pre><span class="kw">var</span> randomNumber1 = <span class="fn">Math.floor</span>(<span class="fn">Math.random</span>() * <span class="num">6</span> + <span class="num">1</span>);
+<span class="kw">var</span> randomNumber2 = <span class="fn">Math.floor</span>(<span class="fn">Math.random</span>() * <span class="num">6</span> + <span class="num">1</span>);
+
+<span class="kw">var</span> randomDiceImage1 = <span class="str">"dice"</span> + randomNumber1 + <span class="str">".png"</span>;
+<span class="kw">var</span> randomImageSource1 = <span class="str">"images/"</span> + randomDiceImage1;
+dice_1 = document.<span class="fn">querySelectorAll</span>(<span class="str">"img.img1"</span>)[<span class="num">0</span>].<span class="fn">setAttribute</span>(<span class="str">"src"</span>, randomImageSource1);
+
+<span class="kw">var</span> randomDiceImage2 = <span class="str">"dice"</span> + randomNumber2 + <span class="str">".png"</span>;
+<span class="kw">var</span> randomImageSource2 = <span class="str">"images/"</span> + randomDiceImage2;
+dice_2 = document.<span class="fn">querySelectorAll</span>(<span class="str">"img.img2"</span>)[<span class="num">0</span>].<span class="fn">setAttribute</span>(<span class="str">"src"</span>, randomImageSource2);
+
+<span class="kw">if</span> (randomNumber1 > randomNumber2) {
+  document.<span class="fn">querySelector</span>(<span class="str">"h1"</span>).innerHTML = <span class="str">"Player 1 Wins!"</span>;
+} <span class="kw">else if</span> (randomNumber1 < randomNumber2) {
+  document.<span class="fn">querySelector</span>(<span class="str">"h1"</span>).innerHTML = <span class="str">"Player 2 Wins!"</span>;
+} <span class="kw">else</span> {
+  document.<span class="fn">querySelector</span>(<span class="str">"h1"</span>).innerHTML = <span class="str">"Draw!"</span>;
+}</pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; Jainam Suthar. All rights reserved.</p>
+    <p>Designed with intention.</p>
+  </footer>
+
+  <!-- Original JS logic — untouched -->
+  <script src="index.js"></script>
+
+</body>
 </html>

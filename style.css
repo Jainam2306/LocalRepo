@@ -316,6 +316,26 @@ img { display: block; max-width: 100%; }
   margin-bottom: 0.75rem;
 }
 
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.card-link:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(28, 26, 23, 0.08);
+}
+
+.card-link h3 {
+  transition: color var(--transition);
+}
+
+.card-link:hover h3 {
+  color: var(--clr-accent);
+}
+
 .card p {
   font-size: var(--fz-sm);
   color: var(--clr-ink-mute);
