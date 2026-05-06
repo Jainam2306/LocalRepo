@@ -1,2 +1,2 @@
-ALl the new changes which have been updated are now visible
-Made changes to index.html , Added button to redirect to the project.
+Last week added DiceGame project to the folder.
+This week working on few projects which helps understand fundamentals of programming. Will upload all together once its completed.
