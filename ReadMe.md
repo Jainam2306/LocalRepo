@@ -1,2 +1,1 @@
-Last week added DiceGame project to the folder.
-This week working on few projects which helps understand fundamentals of programming. Will upload all together once its completed.
+Added few more functionalities locally, will push all the changes together, once the whole feature is completed
